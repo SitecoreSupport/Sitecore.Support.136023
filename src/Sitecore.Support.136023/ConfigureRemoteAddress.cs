@@ -12,8 +12,6 @@ namespace Sitecore.Support
       if (IPExtractor == null)
         return;
 
-      HttpContext.Current.Request.ServerVariables["X-Forward-For"] = "103.3.73.201, 192.168.0.1, 127.0.0.1";
-
       string ipAddress = IPExtractor.ExtractIP();
 
       if (string.IsNullOrWhiteSpace(ipAddress))
