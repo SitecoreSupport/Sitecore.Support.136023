@@ -52,7 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigureRemoteAddress.cs" />
+    <Compile Include="IIPExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ListBasedExtractor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\zzz\Sitecore.Support.136023.config">

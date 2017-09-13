@@ -5,24 +5,24 @@ using Sitecore.Pipelines.HttpRequest;
 
 namespace Sitecore.Support
 {
-  public class ConfigureRemoteAddress: HttpRequestProcessor
+  public class ConfigureRemoteAddress : HttpRequestProcessor
   {
     public override void Process(HttpRequestArgs args)
     {
-     
-      var configHeader = Settings.GetSetting("JSNLog.RemoteAddressHeader", string.Empty);
-      if (!string.IsNullOrEmpty(configHeader))
-      {
-        var configHeaderValue = HttpContext.Current.Request.ServerVariables[configHeader];
-        if (!string.IsNullOrEmpty(configHeaderValue))
-        {
-          IPAddress ipaddress = null;
-          if (IPAddress.TryParse(configHeaderValue, out ipaddress))
-          {
-            HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"] = ipaddress.ToString();
-          }
-        }
-      }
+      if (IPExtractor == null)
+        return;
+
+      HttpContext.Current.Request.ServerVariables["X-Forward-For"] = "103.3.73.201, 192.168.0.1, 127.0.0.1";
+
+      string ipAddress = IPExtractor.ExtractIP();
+
+      if (string.IsNullOrWhiteSpace(ipAddress))
+        return;
+
+      HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"] = ipAddress;
+
     }
+
+    public IIPExtractor IPExtractor { get; set; }
   }
 }
